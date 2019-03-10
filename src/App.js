@@ -14,24 +14,19 @@ class App extends Component {
 
 	componentDidMount = () => {
 		data.forEach((item, i) => {
-			setTimeout(() => this.setState({ blocks: [...this.state.blocks, item]}), 500 * (i+1));
+			setTimeout(() => this.setState({ blocks: [...this.state.blocks, item]}), 500  * (i+1));
 		})
 	};
 
 	componentDidUpdate = (prevProps, prevState) => {
 		const { blocks, groupedBlocks } = prevState;
-		console.log("prevBlocks LENGTH", blocks.length);
-		console.log("prevBlocks", blocks);
-		console.log("prevGroup LENGTH", groupedBlocks.length);
-		console.log("prevGroup", groupedBlocks);
 		if (blocks !== undefined &&
-			blocks.length !== 0 &&
-			blocks.length % SNAP_CONSTANT === 0 &&
+			blocks.length >= 5 &&
+			// blocks.length % SNAP_CONSTANT === 0 &&
 			!blocks[blocks.length - SNAP_CONSTANT].grouped
 		) {
 			// Remove values in range of SNAP_CONSTANT from the array, and move them to state.groupedBlocks, add a reference
 			// to blocks.
-			console.log("slicing", blocks.length - SNAP_CONSTANT);
 			const newGroup = blocks.splice(blocks.length - SNAP_CONSTANT, blocks.length);
 			const start = newGroup[0];
 			const end = newGroup[newGroup.length - 1];
@@ -43,10 +38,6 @@ class App extends Component {
 				"headStateRoot": end.headStateRoot,
 				"headParentRoot": start.headParentRoot
 			};
-			console.log("newBlock LENGTH",blocks.length + 1);
-			console.log("newBlock", [...blocks, newBlock]);
-			console.log("newGroup LENGTH", groupedBlocks.length + 1);
-			console.log("newGroup", [...groupedBlocks, newGroup]);
 			this.setState({
 				blocks: [...blocks, newBlock],
 				groupedBlocks: [...groupedBlocks, newGroup]
@@ -55,6 +46,9 @@ class App extends Component {
 	};
 
 	render(){
+		console.log("blocks",this.state.blocks)
+		console.log(this.state.blocks[this.state.blocks.length - SNAP_CONSTANT])
+		console.log("group",this.state.groupedBlocks)
 		return (
 			<div className="App">
 				<Dag

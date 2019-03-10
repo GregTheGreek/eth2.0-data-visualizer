@@ -13,13 +13,16 @@ export default class Dag extends Component {
 		this.panThatShit = this.panThatShit.bind(this);
 	}
 
-	generateDagData = (blocks, groupedBlocks = []) => {
+	generateDagData = (blocks, groupedBlocks) => {
 		let elements = {nodes: [], edges: []};
-		let prevXpos = 0;
 		blocks.forEach((block, index) => {
-			const xpos = (index + 1) % 5 === 0 ? (index / 5) + (groupedBlocks.length + 1) * 100 : prevXpos * 100;
-			// const xpos = (index + 1) % 5 === 0 ? prevXpos - 5 * 100: prevXpos * 100;
-			prevXpos = xpos;
+			// const xpos = (index + 1) % 5 === 0 ? (index / 5) + (groupedBlocks.length + 1) * 100 : prevXpos * 100;
+			// const xpos = (index + 1) % 5 === 0 ? prevXpos - 100 : prevXpos + 100;
+			// console.log(prevXpos);
+			const xpos = blocks.length * 100;
+			// console.log(blocks.length)
+			// const xpos = blocks.length % 5 === 0 ? (groupedBlocks.length * index) * 100 : blocks.length * 100;
+
 			// Add blocks
 			elements.nodes.push({
 				data: {
