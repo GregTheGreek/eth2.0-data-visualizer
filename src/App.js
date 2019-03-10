@@ -20,11 +20,7 @@ class App extends Component {
 
 	componentDidUpdate = (prevProps, prevState) => {
 		const { blocks, groupedBlocks } = prevState;
-		if (blocks !== undefined &&
-			blocks.length >= 5 &&
-			// blocks.length % SNAP_CONSTANT === 0 &&
-			!blocks[blocks.length - SNAP_CONSTANT].grouped
-		) {
+		if (blocks !== undefined && blocks.length - groupedBlocks.length === SNAP_CONSTANT) {
 			// Remove values in range of SNAP_CONSTANT from the array, and move them to state.groupedBlocks, add a reference
 			// to blocks.
 			const newGroup = blocks.splice(blocks.length - SNAP_CONSTANT, blocks.length);
@@ -46,9 +42,7 @@ class App extends Component {
 	};
 
 	render(){
-		console.log("blocks",this.state.blocks)
-		console.log(this.state.blocks[this.state.blocks.length - SNAP_CONSTANT])
-		console.log("group",this.state.groupedBlocks)
+		console.log(this.state.blocks)
 		return (
 			<div className="App">
 				<Dag
