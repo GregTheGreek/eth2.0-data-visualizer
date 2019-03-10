@@ -57,7 +57,10 @@ class App extends Component {
 	render(){
 		return (
 			<div className="App">
-				<Dag blocks={this.state.blocks}/>
+				<Dag
+					blocks={this.state.blocks}
+					groupedBlocks={this.state.groupedBlocks}
+				/>
 				<StatView></StatView>
 			</div>
     )

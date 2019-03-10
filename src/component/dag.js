@@ -12,9 +12,14 @@ export default class Dag extends Component {
 		this.cytoscapeComponent = React.createRef();
 		this.panThatShit = this.panThatShit.bind(this);
 	}
-	generateDagData = (blocks) => {
+
+	generateDagData = (blocks, groupedBlocks = []) => {
 		let elements = {nodes: [], edges: []};
+		let prevXpos = 0;
 		blocks.forEach((block, index) => {
+			const xpos = (index + 1) % 5 === 0 ? (index / 5) + (groupedBlocks.length + 1) * 100 : prevXpos * 100;
+			// const xpos = (index + 1) % 5 === 0 ? prevXpos - 5 * 100: prevXpos * 100;
+			prevXpos = xpos;
 			// Add blocks
 			elements.nodes.push({
 				data: {
@@ -22,7 +27,7 @@ export default class Dag extends Component {
 					label: block.slot
 				},
 				position: {
-					x: index * 100,
+					x: xpos,
 					y: 100
 				},
 				style: {
@@ -59,9 +64,9 @@ export default class Dag extends Component {
 	}
 
 	render() {
-		const {elements} = this.generateDagData(this.props.blocks);
+		const {elements} = this.generateDagData(this.props.blocks, this.props.groupedBlocks);
 		return (
-			
+
 			<div className="dag-view-container">
 				<CytoscapeComponent
 					ref={this.cytoscapeComponent}
@@ -70,7 +75,7 @@ export default class Dag extends Component {
 					style={styles.blockView}
 					fit="true"
 					panningEnabled={false}
-					
+
 				/>
 			</div>
 		)
