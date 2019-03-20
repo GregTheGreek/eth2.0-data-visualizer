@@ -1,3 +1,6 @@
+# MOVED TO https://github.com/baconviewer/bacon-vision
+
+
 # eth2.0-data-visualizer
 Eth2.0 data visualizer, built to be implementation agnostic.
 
